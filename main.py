@@ -4,7 +4,6 @@ import subprocess
 import panda3d
 from direct.gui import DirectGuiGlobals as DGG
 from panda3d.core import LVector3
-from panda_interface_glue import panda_interface_glue
 from direct.showbase.ShowBase import ShowBase
 from direct.gui.DirectButton import DirectButton
 
@@ -48,16 +47,8 @@ class MyContainer:
             p = (x,0,y)
             b = create_button(s,p,scale,self.run_sample,(s,))
             y -= 0.1
-    
-    def respawn(self):
-        self.b = ShowBase()
-        self.build_screen()
-        self.my_process = None
-        
+            
     def run_sample(self,path,*args):
-        self.b.destroy() # destroy the old showbase
-        self.b = None
-        
         # to run a different process, you may need to be in the correct
         # working directory
         
@@ -70,8 +61,5 @@ class MyContainer:
 if __name__=="__main__":
     M = MyContainer()
     
-    #this waits, regular waiting doesn't work for some reason.
-    while M.my_process == None or M.my_process == 0:
-        if M.my_process == 0:
-            M.respawn()
+    while True:
         M.b.taskMgr.step()
